@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      p {
+        font-weight: bold;
+      }
+      .topic {
+        text-decoration: underline;
+        margin: 10px;
+      }
+      .task {
+        margin: 20px 10px;
+      }
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        width: 600px;
+        height: 80px;
+        border: 1px green solid;
+      }
+      .movableElement {
+        height: 50px;
+        width: 50px;
+        border: blue dashed 1px;
+        margin: 10px 10px 0px 10px;
+      }
+      img {
+        max-width: 100%;
+      }
+      .receivingElement {
+        height: 150px;
+        width: 600px;
+        border: red solid 1px;
+        margin: 20px 0;
+        display: flex;
+        flex-wrap: wrap;
+        text-align: center;
+        vertical-align: top;
+      }
+      .list {
+        margin-top: 20px;
+        margin-left: -140px;
+        display: flex;
+      }
+      span {
+        height: 20px;
+        width: 150px;
+      }
+      .leftEl {
+        height: 100px;
+        width: 120px;
+        display: inline-block;
+      }
+      .bottomEl {
+        height: 100px;
+        width: 600px;
+      }
+      .rightEl {
+        height: 100px;
+        width: 120px;
+        display: inline-block;
+        margin-left: 354px;
+      }
+      .urn {
+        height: 100px;
+        width: 100px;
+      }
+    </style>
+
+    <p>Задание 1, 2</p>
+
+    <div class="topic">Объект event.dataTransfer</div>
+    <div class="task">
+      Дан набор элементов для перетягивания и принимающий див. Сделайте так,
+      чтобы при дропе в принимающий див записывался номер брошенного элемента.
+    </div>
+    <div class="task">
+      Дан набор элементов для перетягивания и принимающий див. Сделайте так,
+      чтобы при дропе элемент перемещался в принимающий див.
+    </div>
+
+    <div class="container">
+      <div class="movableElement" draggable="true">1</div>
+      <div class="movableElement" draggable="true">2</div>
+      <div class="movableElement" draggable="true">3</div>
+      <div class="movableElement" draggable="true">4</div>
+      <div class="movableElement" draggable="true">5</div>
+      <div class="movableElement" draggable="true">6</div>
+      <div class="movableElement" draggable="true">7</div>
+      <div class="movableElement" draggable="true">8</div>
+    </div>
+
+    <div class="receivingElement">
+      <span> Принимающий див</span>
+      <div class="list">Список внесённых элементов:</div>
+    </div>
+
+    <p>Задание 3</p>
+
+    <div class="task">
+      Дан набор элементов для перетягивания и набор принимающих дивов-панелек.
+      Сделайте так, чтобы элементы можно было перемещать на различные панельки.
+    </div>
+
+    <div class="container">
+      <div class="movableElement MET3" draggable="true">1</div>
+      <div class="movableElement MET3" draggable="true">2</div>
+      <div class="movableElement MET3" draggable="true">3</div>
+      <div class="movableElement MET3" draggable="true">4</div>
+      <div class="movableElement MET3" draggable="true">5</div>
+      <div class="movableElement MET3" draggable="true">6</div>
+      <div class="movableElement MET3" draggable="true">7</div>
+      <div class="movableElement MET3" draggable="true">8</div>
+    </div>
+
+    <div class="receivingElement RET2 leftEl">
+      <span> Принимающий див2</span>
+    </div>
+    <div class="receivingElement RET2 rightEl">
+      <span> Принимающий див3</span>
+    </div>
+    <div class="receivingElement RET2 bottomEl">
+      <span> Принимающий див4</span>
+    </div>
+
+    <p>Задание 4</p>
+
+    <div class="task">
+      Дан набор элементов для перетягивания и принимающий див. Сделайте так,
+      чтобы дроп на принимающем диве приводил в удалению элемента.
+    </div>
+
+    <div class="container">
+      <div class="movableElement MET4" draggable="true">1</div>
+      <div class="movableElement MET4" draggable="true">2</div>
+      <div class="movableElement MET4" draggable="true">3</div>
+      <div class="movableElement MET4" draggable="true">4</div>
+      <div class="movableElement MET4" draggable="true">5</div>
+      <div class="movableElement MET4" draggable="true">6</div>
+      <div class="movableElement MET4" draggable="true">7</div>
+      <div class="movableElement MET4" draggable="true">8</div>
+    </div>
+
+    <div class="receivingElement T4">
+      <img
+        class="urn"
+        src="https://e7.pngegg.com/pngimages/31/54/png-clipart-waste-container-recycling-bin-paper-trash-s-rectangle-recycling.png"
+        alt="Корзина"
+      />
+    </div>
+
+    <script>
+      // http://new.code.mu/ru/javascript/book/drag-and-drop/oblect-event.dataTransfer/
+
+      // задание 1,2
+
+      const d = document
+      const elems = d.querySelectorAll('.movableElement')
+      const container = d.querySelector('.container')
+      const receivingElement = d.querySelector('.receivingElement')
+      const list = d.querySelector('.list')
+
+      elems.forEach((elem, index) => {
+        elem.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('itemNumber', index)
+        })
+      })
+
+      receivingElement.addEventListener('dragover', (e) => {
+        e.preventDefault()
+      })
+
+      receivingElement.addEventListener('drop', function (e) {
+        this.appendChild(elems[e.dataTransfer.getData('itemNumber')])
+        list.textContent += ` ${
+          elems[e.dataTransfer.getData('itemNumber')].textContent
+        },`
+      })
+
+      // задание 3
+
+      const RET2 = d.querySelectorAll('.RET2')
+      const elems3 = d.querySelectorAll('.MET3')
+
+      elems3.forEach((elem, index) => {
+        elem.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('itemNumber', index)
+        })
+      })
+
+      RET2.forEach((elem) => {
+        elem.addEventListener('dragover', (e) => {
+          e.preventDefault()
+        })
+        elem.addEventListener('drop', function (e) {
+          this.appendChild(elems3[e.dataTransfer.getData('itemNumber')])
+        })
+      })
+
+      // задание 4
+
+      const T4 = d.querySelector('.T4')
+      const MET4 = d.querySelectorAll('.MET4')
+      const urn = d.querySelector('.urn')
+
+      MET4.forEach((elem, index) => {
+        elem.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('itemNumber', index)
+        })
+      })
+
+      T4.addEventListener('dragover', (e) => {
+        e.preventDefault()
+      })
+
+      T4.addEventListener('drop', function (e) {
+        MET4[e.dataTransfer.getData('itemNumber')].remove()
+        urn.src =
+          'https://w7.pngwing.com/pngs/670/957/png-transparent-trashcan-full-garbage-recycle-recycling-recycle-bin-trash-rubbish-delete-remove.png'
+        urn.style.width = '90px'
+      })
+    </script>
+  </body>
+</html>
